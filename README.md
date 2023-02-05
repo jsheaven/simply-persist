@@ -14,7 +14,7 @@ possible isomorphic on client and server side, no matter what.
 
 <h2 align="center">Features</h2>
 
-- ✅ Write to storage using simple key/value API: `const s = getStorage(); s.set('a', 123); s.get('a', 0) // 123 or 0 if not set`
+- ✅ Write to storage using simple key/value API
 - ✅ Just `512 byte` nano sized (ESM, gizpped)
 - ✅ Isomorphic
 - ✅ Supports `localStorage`
