@@ -3,6 +3,7 @@
     "module": "es2020",
     "target": "es2020",
     "declaration": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "dist",
     "emitDeclarationOnly": true,

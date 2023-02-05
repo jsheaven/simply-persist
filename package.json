@@ -1,6 +1,6 @@
 {
   "name": "simply-persist",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -22,10 +22,10 @@
     "type": "git"
   },
   "scripts": {
-    "test": "jest --verbose --coverage",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose --coverage ./test/*.test.ts",
     "prebuild": "rm -rf ./dist",
-    "build": "esbuild ./src/index.ts --bundle --outfile=./dist/index.mjs --format=esm --sourcemap '--external:@upstash/redis/with-fetch' && esbuild ./src/index.ts --bundle  --outfile=./dist/index.js --format=cjs --sourcemap '--external:@upstash/redis/with-fetch' && tsc ./src/index.ts --declaration --emitDeclarationOnly --declarationDir './dist' --moduleResolution node --target es2015",
-    "postbuild": "gzip-size ./dist/index.mjs --include-original"
+    "build": "esbuild ./src/index.ts --minify --bundle --outfile=./dist/index.mjs --format=esm --sourcemap '--external:@upstash/redis/with-fetch' && esbuild ./src/index.ts  --bundle  --minify --outfile=./dist/index.js --format=cjs --sourcemap '--external:@upstash/redis/with-fetch' && tsc ./src/index.ts --declaration --emitDeclarationOnly --declarationDir './dist' --moduleResolution node --target es2015",
+    "postbuild": "cp ./dist/index.d.ts ./dist/index.mjs.d.ts && gzip-size ./dist/index.mjs --include-original"
   },
   "author": "Aron Homberg <info@aron-homberg.de>",
   "sideEffects": false,
@@ -46,12 +46,13 @@
   },
   "devDependencies": {
     "jest": "^29.4.1",
-    "ts-jest": "^29.0.5",
+    "ts-jest": "next",
     "typescript": "^4.9.5",
     "@types/jest": "^29.4.0",
     "esbuild": "^0.17.5",
     "gzip-size-cli": "^5.1.0",
     "jsdom": "^21.1.0",
-    "global-jsdom": "^8.7.0"
+    "global-jsdom": "^8.7.0",
+    "dotenv": "^16.0.3"
   }
 }

@@ -3,8 +3,9 @@ import { UpstashProvider } from '../isomporphic'
 import { PersistenceProvider, PersistenceProviderImpl, PersistenceProviderOptions } from '../provider'
 
 /** returns the default persistence provider for each runtime environment */
+/* istanbul ignore next */
 export const getPersistenceProvider = <T>(
-  provider: PersistenceProvider = 'upstash',
+  provider: PersistenceProvider,
   options?: PersistenceProviderOptions,
 ): PersistenceProviderImpl<T> => {
   switch (provider) {

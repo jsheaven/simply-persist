@@ -5,7 +5,7 @@ import { isServer } from 'runtime-info'
 
 /** returns the persistence provider (isomorphic) */
 export const getStorage = <T>(
-  provider: PersistenceProvider = 'upstash',
+  provider: PersistenceProvider = 'local',
   options?: PersistenceProviderOptions,
 ): PersistenceProviderImpl<T> => {
   if (isServer()) {
