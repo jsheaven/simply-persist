@@ -1,0 +1,57 @@
+{
+  "name": "simply-persist",
+  "version": "1.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "description": "Isomorphic object key/value persistence layer (browser, server) with in-memory, browser and fast, free-tier serverless backend providers",
+  "keywords": [
+    "server-side",
+    "client-side",
+    "persistency",
+    "storage",
+    "js",
+    "localStorage",
+    "sessionStorage",
+    "in-memory",
+    "upstash"
+  ],
+  "repository": {
+    "url": "git+https://github.com/kyr0/runtime-info.git",
+    "type": "git"
+  },
+  "scripts": {
+    "test": "jest --verbose --coverage",
+    "prebuild": "rm -rf ./dist",
+    "build": "esbuild ./src/index.ts --bundle --outfile=./dist/index.mjs --format=esm --sourcemap '--external:@upstash/redis/with-fetch' && esbuild ./src/index.ts --bundle  --outfile=./dist/index.js --format=cjs --sourcemap '--external:@upstash/redis/with-fetch' && tsc ./src/index.ts --declaration --emitDeclarationOnly --declarationDir './dist' --moduleResolution node --target es2015",
+    "postbuild": "gzip-size ./dist/index.mjs --include-original"
+  },
+  "author": "Aron Homberg <info@aron-homberg.de>",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "runtime-info": "^1.0.1",
+    "@upstash/redis": "^1.19.3"
+  },
+  "devDependencies": {
+    "jest": "^29.4.1",
+    "ts-jest": "^29.0.5",
+    "typescript": "^4.9.5",
+    "@types/jest": "^29.4.0",
+    "esbuild": "^0.17.5",
+    "gzip-size-cli": "^5.1.0",
+    "jsdom": "^21.1.0",
+    "global-jsdom": "^8.7.0"
+  }
+}
