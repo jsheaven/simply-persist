@@ -29,3 +29,6 @@ jobs:
     - run: yarn install --frozen-lockfile
     - run: yarn build
     - run: yarn test
+        env:
+          UPSTASH_REDIS_TEST_URL: ${{ secrets.UPSTASH_REDIS_TEST_URL }}
+          UPSTASH_REDIS_TEST_TOKEN: ${{ secrets.UPSTASH_REDIS_TEST_TOKEN }}
