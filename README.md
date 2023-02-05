@@ -20,7 +20,7 @@ possible isomorphic on client and server side, no matter what.
 - ✅ Supports `localStorage`
 - ✅ Supports `sessionStorage`
 - ✅ Supports in-memory as an automatic fallback
-- ✅ Supports [Upstash](upstash.com) (serverless, free-tier database backend)
+- ✅ Supports [Upstash](www.upstash.com) (serverless, free-tier database backend)
 - ✅ Tree-shakable, side-effect free, so maybe just `~200 byte` for you
 - ✅ First class TypeScript support
 - ✅ 100% Unit Test coverage
