@@ -1,6 +1,6 @@
 <h1 align="center">simply-persist</h1>
 
-> Nano untility library for JavaScript to persist objects (POJOs) everywhere and with ease
+> Nano utility library for JavaScript to persist objects (POJOs) everywhere and with ease
 
 <h2 align="center">Purpose</h2>
 
