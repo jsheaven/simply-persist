@@ -2,6 +2,8 @@ import type { PersistenceProviderImpl } from '../provider'
 import { GenericLocalStorage } from './generic'
 import { MiddlewareFn } from '../provider'
 
+export interface MemoryProviderOptions {}
+
 export const newInMemoryGenericStorageBackend = <T = string>(): GenericLocalStorage<T> => {
   let cache = new Map<string, T>()
   return {

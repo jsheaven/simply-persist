@@ -1,4 +1,4 @@
-import { WebStorageProvider } from '../isomporphic'
+import { UpstashProviderOptions, WebStorageProvider } from '../isomporphic'
 import { UpstashProvider } from '../isomporphic'
 import { PersistenceProvider, PersistenceProviderImpl, PersistenceProviderOptions } from '../provider'
 
@@ -9,7 +9,7 @@ export const getPersistenceProvider = <T>(
 ): PersistenceProviderImpl<T> => {
   switch (provider) {
     case 'upstash':
-      return new UpstashProvider<T>(options)
+      return new UpstashProvider<T>(options as UpstashProviderOptions)
     case 'session':
       return new WebStorageProvider<T>()
     case 'local':

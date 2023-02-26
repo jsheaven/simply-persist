@@ -1,3 +1,4 @@
+import type { MemoryProviderOptions } from './isomporphic/memory'
 import type { UpstashProviderOptions } from './isomporphic/upstash'
 
 export type MiddlewareFn<T> = (key: string, value: T) => Promise<T>
@@ -12,4 +13,4 @@ export interface PersistenceProviderImpl<T> {
 
 export type PersistenceProvider = 'upstash' | 'session' | 'local' | 'memory'
 
-export type PersistenceProviderOptions = UpstashProviderOptions
+export type PersistenceProviderOptions = UpstashProviderOptions | MemoryProviderOptions
