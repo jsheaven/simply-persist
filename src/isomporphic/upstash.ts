@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis/with-fetch'
-import type { PersistenceProviderImpl } from '../provider'
+import type { MiddlewareFn, PersistenceProviderImpl } from '../provider'
 
 export interface UpstashProviderOptions {
   url: string
@@ -15,10 +15,18 @@ export class UpstashProvider<T> implements PersistenceProviderImpl<T> {
       token: options.token,
     })
   }
-  async get(key: string, defaultValue: T) {
-    return ((await this.upstashClient.get(key)) || defaultValue) as T
+  async get(key: string, defaultValue: T, middlewareFn?: MiddlewareFn<T>) {
+    let rawValue = ((await this.upstashClient.get(key)) || defaultValue) as T
+
+    if (typeof middlewareFn === 'function') {
+      return await middlewareFn(key, rawValue)
+    }
+    return rawValue
   }
-  async set(key: string, value: T) {
+  async set(key: string, value: T, middlewareFn?: MiddlewareFn<T>) {
+    if (typeof middlewareFn === 'function') {
+      value = await middlewareFn(key, value)
+    }
     await this.upstashClient.set(key, value)
   }
   async del(key: string) {

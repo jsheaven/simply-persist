@@ -1,5 +1,6 @@
 import type { PersistenceProviderImpl } from '../provider'
 import { GenericLocalStorage } from './generic'
+import { MiddlewareFn } from '../provider'
 
 export const newInMemoryGenericStorageBackend = <T = string>(): GenericLocalStorage<T> => {
   let cache = new Map<string, T>()
@@ -31,12 +32,22 @@ export class WebStorageProvider<T> implements PersistenceProviderImpl<T> {
   constructor(storage?: Storage) {
     this.storage = storage || memory
   }
-  async get(key: string, defaultValue: T) {
-    const value = this.storage.getItem(key) as string
-    if (!value) return defaultValue
-    return JSON.parse(value)
+  async get(key: string, defaultValue: T, middlewareFn?: MiddlewareFn<T>) {
+    const rawValue = this.storage.getItem(key) as string
+
+    if (!rawValue) return defaultValue
+
+    let value = JSON.parse(rawValue)
+
+    if (typeof middlewareFn === 'function') {
+      value = await middlewareFn(key, value)
+    }
+    return value
   }
-  async set(key: string, value: T) {
+  async set(key: string, value: T, middlewareFn?: MiddlewareFn<T>) {
+    if (typeof middlewareFn === 'function') {
+      value = await middlewareFn(key, value)
+    }
     this.storage.setItem(key, JSON.stringify(value))
   }
   async del(key: string) {

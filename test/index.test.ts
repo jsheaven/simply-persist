@@ -1,6 +1,5 @@
-import { getStorage } from '../dist/index.mjs'
+import { getStorage, UpstashProviderOptions, MiddlewareFn } from '../dist/index.esm'
 import { config } from 'dotenv'
-import { UpstashProviderOptions } from '../dist/isomporphic/upstash'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
@@ -58,6 +57,20 @@ it('can write and read from sessionStorage (server)', async () => {
   expect(await memoryStorage.get('abc', 0)).toStrictEqual(123)
 })
 
+it('can write and read from sessionStorage using a middleware (server)', async () => {
+  const getMiddleware: MiddlewareFn<number> = async <T>(key: string, value: T) => {
+    return value
+  }
+
+  const setMiddleware: MiddlewareFn<number> = async <T>(key: string, value: T) => {
+    return value
+  }
+
+  const memoryStorage = getStorage<number>('session')
+  await memoryStorage.set('abc', 123, setMiddleware)
+  expect(await memoryStorage.get('abc', 0, getMiddleware)).toStrictEqual(123)
+})
+
 it('can delete from sessionStorage (server)', async () => {
   const memoryStorage = getStorage<number>('session')
   await memoryStorage.set('abc', 123)
@@ -70,6 +83,23 @@ it('can clear sessionStorage (server)', async () => {
   await memoryStorage.set('abc', 123)
   await memoryStorage.clear()
   expect(await memoryStorage.get('abc', 444)).toStrictEqual(444)
+})
+
+it('can write and read from upstash using a middleware (server)', async () => {
+  const getMiddleware: MiddlewareFn<number> = async <T>(key: string, value: T) => {
+    return value
+  }
+
+  const setMiddleware: MiddlewareFn<number> = async <T>(key: string, value: T) => {
+    return value
+  }
+
+  const memoryStorage = getStorage<number>('upstash', {
+    url: process.env.UPSTASH_REDIS_TEST_URL,
+    token: process.env.UPSTASH_REDIS_TEST_TOKEN,
+  } as UpstashProviderOptions)
+  await memoryStorage.set('abc', 123, setMiddleware)
+  expect(await memoryStorage.get('abc', 0, getMiddleware)).toStrictEqual(123)
 })
 
 it('can save upstash (server)', async () => {
@@ -230,4 +260,20 @@ it('can clear memory (browser)', async () => {
   await memoryStorage.set('abc', 123)
   await memoryStorage.clear()
   expect(await memoryStorage.get('abc', 444)).toStrictEqual(444)
+})
+
+it('can write and read from memory using a middleware (browser)', async () => {
+  require('global-jsdom/register')
+
+  const getMiddleware: MiddlewareFn<number> = async <T>(key: string, value: T) => {
+    return value
+  }
+
+  const setMiddleware: MiddlewareFn<number> = async <T>(key: string, value: T) => {
+    return value
+  }
+
+  const memoryStorage = getStorage<number>('memory')
+  await memoryStorage.set('abc', 123, setMiddleware)
+  expect(await memoryStorage.get('abc', 0, getMiddleware)).toStrictEqual(123)
 })
