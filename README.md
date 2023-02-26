@@ -15,12 +15,13 @@ possible isomorphic on client and server side, no matter what.
 <h2 align="center">Features</h2>
 
 - ✅ Write to storage using simple key/value API
-- ✅ Just `515 byte` nano sized (ESM, gizpped)
-- ✅ Isomorphic
+- ✅ Middleware function API allows to hook what is read and written
+- ✅ Isomorphic, works in-browser and in Node.js
 - ✅ Supports `localStorage`
 - ✅ Supports `sessionStorage`
 - ✅ Supports in-memory as an automatic fallback
 - ✅ Supports [Upstash](https://www.upstash.com) (serverless, free-tier database backend)
+- ✅ Just `571 byte` nano sized (ESM, gizpped)
 - ✅ Tree-shakable, side-effect free, so maybe just `~200 byte` for you
 - ✅ First class TypeScript support
 - ✅ 100% Unit Test coverage
