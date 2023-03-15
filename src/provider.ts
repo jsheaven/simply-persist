@@ -15,3 +15,6 @@ export interface PersistenceProviderImpl<T> {
 export type PersistenceProvider = 'upstash' | 'session' | 'local' | 'memory'
 
 export type PersistenceProviderOptions = UpstashProviderOptions | MemoryProviderOptions
+
+export { MemoryStorage, WebStorage } from './isomporphic/memory'
+export { UpstashStorage } from './isomporphic/upstash'
