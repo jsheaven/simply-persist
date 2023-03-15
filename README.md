@@ -21,7 +21,8 @@ possible isomorphic on client and server side, no matter what.
 - ✅ Supports `sessionStorage`
 - ✅ Supports in-memory as an automatic fallback
 - ✅ Supports [Upstash](https://www.upstash.com) (serverless, free-tier database backend)
-- ✅ Just `571 byte` nano sized (ESM, gizpped)
+- ✅ Exposes the backend API reference of each storage provider for low-level API access
+- ✅ Just `592 byte` nano sized (ESM, gizpped)
 - ✅ Tree-shakable, side-effect free, so maybe just `~200 byte` for you
 - ✅ First class TypeScript support
 - ✅ 100% Unit Test coverage
