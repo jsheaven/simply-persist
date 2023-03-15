@@ -9,6 +9,7 @@ export interface PersistenceProviderImpl<T> {
   set: (key: string, value: T, middlewareFn?: MiddlewareFn<T>) => Promise<void>
   del: (key: string) => Promise<void>
   clear: () => Promise<void>
+  backendApi: any
 }
 
 export type PersistenceProvider = 'upstash' | 'session' | 'local' | 'memory'

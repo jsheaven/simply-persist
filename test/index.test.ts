@@ -1,4 +1,4 @@
-import { getStorage, UpstashProviderOptions, MiddlewareFn } from '../dist/index.esm'
+import { getStorage, UpstashProviderOptions, MiddlewareFn } from '../dist/index.esm.js'
 import { config } from 'dotenv'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
@@ -94,31 +94,33 @@ it('can write and read from upstash using a middleware (server)', async () => {
     return value
   }
 
-  const memoryStorage = getStorage<number>('upstash', {
+  const upStashStorage = getStorage<number>('upstash', {
     url: process.env.UPSTASH_REDIS_TEST_URL,
     token: process.env.UPSTASH_REDIS_TEST_TOKEN,
   } as UpstashProviderOptions)
-  await memoryStorage.set('abc', 123, setMiddleware)
-  expect(await memoryStorage.get('abc', 0, getMiddleware)).toStrictEqual(123)
+
+  await upStashStorage.set('abc', 123, setMiddleware)
+  expect(upStashStorage.backendApi).toBeDefined()
+  expect(await upStashStorage.get('abc', 0, getMiddleware)).toStrictEqual(123)
 })
 
 it('can save upstash (server)', async () => {
-  const memoryStorage = getStorage<number>('upstash', {
+  const upStashStorage = getStorage<number>('upstash', {
     url: process.env.UPSTASH_REDIS_TEST_URL,
     token: process.env.UPSTASH_REDIS_TEST_TOKEN,
   } as UpstashProviderOptions)
-  await memoryStorage.set('abc', 123)
-  expect(await memoryStorage.get('abc', 0)).toStrictEqual(123)
+  await upStashStorage.set('abc', 123)
+  expect(await upStashStorage.get('abc', 0)).toStrictEqual(123)
 })
 
 it('can delete from upstash (server)', async () => {
-  const memoryStorage = getStorage<number>('upstash', {
+  const upStashStorage = getStorage<number>('upstash', {
     url: process.env.UPSTASH_REDIS_TEST_URL,
     token: process.env.UPSTASH_REDIS_TEST_TOKEN,
   } as UpstashProviderOptions)
-  await memoryStorage.set('abc', 123)
-  await memoryStorage.del('abc')
-  expect(await memoryStorage.get('abc', 444)).toStrictEqual(444)
+  await upStashStorage.set('abc', 123)
+  await upStashStorage.del('abc')
+  expect(await upStashStorage.get('abc', 444)).toStrictEqual(444)
 })
 
 it('can clear upstash (server)', async () => {
@@ -158,39 +160,40 @@ it('can clear memory (browser)', async () => {
   const memoryStorage = getStorage<number>('memory')
   await memoryStorage.set('abc', 123)
   await memoryStorage.clear()
+  expect(memoryStorage.backendApi).toBeDefined()
   expect(await memoryStorage.get('abc', 444)).toStrictEqual(444)
 })
 
 it('can save upstash (browser)', async () => {
   require('global-jsdom/register')
-  const memoryStorage = getStorage<number>('upstash', {
+  const upStashStorage = getStorage<number>('upstash', {
     url: process.env.UPSTASH_REDIS_TEST_URL,
     token: process.env.UPSTASH_REDIS_TEST_TOKEN,
   } as UpstashProviderOptions)
-  await memoryStorage.set('abc', 123)
-  expect(await memoryStorage.get('abc', 0)).toStrictEqual(123)
+  await upStashStorage.set('abc', 123)
+  expect(await upStashStorage.get('abc', 0)).toStrictEqual(123)
 })
 
 it('can delete from upstash (browser)', async () => {
   require('global-jsdom/register')
-  const memoryStorage = getStorage<number>('upstash', {
+  const upStashStorage = getStorage<number>('upstash', {
     url: process.env.UPSTASH_REDIS_TEST_URL,
     token: process.env.UPSTASH_REDIS_TEST_TOKEN,
   } as UpstashProviderOptions)
-  await memoryStorage.set('abc', 123)
-  await memoryStorage.del('abc')
-  expect(await memoryStorage.get('abc', 444)).toStrictEqual(444)
+  await upStashStorage.set('abc', 123)
+  await upStashStorage.del('abc')
+  expect(await upStashStorage.get('abc', 444)).toStrictEqual(444)
 })
 
 it('can clear upstash (browser)', async () => {
   require('global-jsdom/register')
-  const memoryStorage = getStorage<number>('upstash', {
+  const upStashStorage = getStorage<number>('upstash', {
     url: process.env.UPSTASH_REDIS_TEST_URL,
     token: process.env.UPSTASH_REDIS_TEST_TOKEN,
   } as UpstashProviderOptions)
-  await memoryStorage.set('abc', 123)
-  await memoryStorage.clear()
-  expect(await memoryStorage.get('abc', 444)).toStrictEqual(444)
+  await upStashStorage.set('abc', 123)
+  await upStashStorage.clear()
+  expect(await upStashStorage.get('abc', 444)).toStrictEqual(444)
 })
 
 it('can write and read from localStorage (browser)', async () => {

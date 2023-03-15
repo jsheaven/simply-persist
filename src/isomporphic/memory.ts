@@ -58,4 +58,8 @@ export class WebStorageProvider<T> implements PersistenceProviderImpl<T> {
   async clear() {
     this.storage.clear()
   }
+
+  get backendApi() {
+    return this.storage
+  }
 }

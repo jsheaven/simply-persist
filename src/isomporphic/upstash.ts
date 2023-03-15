@@ -35,4 +35,8 @@ export class UpstashProvider<T> implements PersistenceProviderImpl<T> {
   async clear() {
     await this.upstashClient.flushdb()
   }
+
+  get backendApi() {
+    return this.upstashClient
+  }
 }
