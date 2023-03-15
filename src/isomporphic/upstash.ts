@@ -40,3 +40,7 @@ export class UpstashProvider<T> implements PersistenceProviderImpl<T> {
     return this.upstashClient
   }
 }
+
+export interface UpstashStorage<T> extends PersistenceProviderImpl<T> {
+  backendApi: Redis
+}

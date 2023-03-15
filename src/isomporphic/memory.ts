@@ -63,3 +63,11 @@ export class WebStorageProvider<T> implements PersistenceProviderImpl<T> {
     return this.storage
   }
 }
+
+export interface MemoryStorage<T> extends PersistenceProviderImpl<T> {
+  backendApi: Omit<Omit<Storage, 'key'>, 'length'>
+}
+
+export interface WebStorage<T> extends PersistenceProviderImpl<T> {
+  backendApi: Storage
+}
